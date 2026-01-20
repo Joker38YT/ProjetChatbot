@@ -241,29 +241,53 @@ public class Utilitaire {
         // Par exemple, si V est [3,4,5,5,5,6,6,8,8,8,12,16,16,20]
         // si seuil<=3 alors le résultat est [5,8].
         // si le seuil>3 alors le résultat est []}
+//        ArrayList<Integer> vfin = new ArrayList<>();
+//        if (v.isEmpty()) {
+//            return vfin; // Sécurité si la liste est vide
+//        }
+//
+//        int compteur = 1;
+//        int valeurPrec = v.get(0);
+//
+//        for (int i = 1; i < v.size(); i++) {
+//            if (v.get(i) == valeurPrec) {
+//                compteur++;
+//            } else {
+//                if (compteur >= seuil) {
+//                    vfin.add(valeurPrec);
+//                }
+//                valeurPrec = v.get(i);
+//                compteur = 1;
+//            }
+//        }
+//        if (compteur >= seuil) {
+//            vfin.add(valeurPrec);
+//        }
+//        return vfin;
         ArrayList<Integer> vfin = new ArrayList<>();
+        if (v == null || v.isEmpty()) return vfin;
+
         int compteur = 1;
-        int valeurPrec = v.get(0);
-        for(int i = 1; i<v.size() ; i++){
-            if(v.get(i) == valeurPrec){
+        int maxTrouve = 0;
+
+        for (int i = 1; i <= v.size(); i++) {
+            if (i < v.size() && v.get(i).equals(v.get(i-1))) {
                 compteur++;
-            } else{
-                if (compteur == seuil) {
-                    vfin.add(valeurPrec);
-                } else if (compteur > seuil) {
-                   vfin.clear();
-                   vfin.add(valeurPrec);
-                   seuil = compteur;
+            }
+            else {
+                int valeurCandidate = v.get(i-1);
+
+                if (compteur >= seuil) {
+                    if (compteur > maxTrouve) {
+                        maxTrouve = compteur;
+                        vfin.clear();
+                        vfin.add(valeurCandidate);
+                    } else if (compteur == maxTrouve) {
+                        vfin.add(valeurCandidate);
+                    }
                 }
-                valeurPrec = v.get(i);
                 compteur = 1;
             }
-        }
-        if (compteur == seuil) {
-            vfin.add(valeurPrec);
-        } else if (compteur > seuil) {
-            vfin.clear();
-            vfin.add(valeurPrec);
         }
         return vfin;
     }
@@ -343,13 +367,16 @@ public class Utilitaire {
         for (int i = 0 ; i < questionsReponses.size() ; i++){
             String questionReponse = questionsReponses.get(i);
             String question = questionReponse.substring(0, questionReponse.indexOf("?"));
-
+            String reponse = calculForme(questionReponse.substring(questionReponse.indexOf("?")+2), motsOutils);
             String questionMotsOutils = calculForme(question, motsOutils);
             ArrayList<String> motDeQuestion = decoupeEnMots(questionMotsOutils);
 
+            System.out.println(reponse);
+
+
             for (int j = 0 ; j < motDeQuestion.size(); j++){
                 if (existeChaineDicho(motsOutils, motDeQuestion.get(j))){
-                    index.ajouterSortieAEntree(motDeQuestion.get(j) + "_" + j, i);
+                    index.ajouterSortieAEntree(motDeQuestion.get(j) + "_" + j, rechercherChaine(formes, reponse));
                 }
             }
         }
@@ -407,15 +434,15 @@ public class Utilitaire {
         ArrayList<String> vDeQuestion = decoupeEnMots(question);
         ArrayList<Integer> vFusion = new ArrayList<>();
         for(int i=0; i<vDeQuestion.size(); i++){
-            if(existeChaineDicho(motsOutils, vDeQuestion.get(i))){
-                compteur++;
+            if(existeChaine(motsOutils, vDeQuestion.get(i))){
                 String mot = vDeQuestion.get(i).toLowerCase() + "_" + i;
                 vFusion = fusion(vFusion, IndexFormes.rechercherSorties(mot));
+                compteur++;
             }
         }
         System.out.println(vFusion);
         System.out.println(compteur);
-        vFusion = maxOccurences(vFusion, compteur);
+        vFusion = maxOccurences(vFusion, compteur-1);
         System.out.println(vFusion);
         for(int i = 0; i< candidates.size(); i++){
             int y;

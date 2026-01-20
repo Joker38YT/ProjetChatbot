@@ -39,6 +39,7 @@ public class Chatbot {
 
         // construction de la table des formes de réponses
         formesReponses = Utilitaire.constructionTableFormes(reponses, motsOutils);
+        Utilitaire.trierChaines(formesReponses);
         System.out.println(formesReponses);
 
         // initialisation du vecteur des questions/réponses idéales

@@ -34,13 +34,13 @@ public class Index {
                 int m;
                 while (inf < sup) {
                     m = (inf + sup) / 2;
-                    if (sorties.get(m) >= sortie) {
+                    if (sorties.get(m).compareTo(sortie)>=0) {
                         sup = m;
                     } else {
                         inf = m + 1; // poursuivre la recherche à droite sur [m+1..sup-1]
                     }
                 }
-                if (sorties.get(sup) == sortie) {
+                if (sorties.get(sup).compareTo(sortie)==0) {
                     return sup;
                 } else {
                     return -sup;
