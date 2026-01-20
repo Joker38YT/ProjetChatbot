@@ -161,7 +161,15 @@ public class Utilitaire {
         //{mots est trié dans l'ordre lexicographique}=>
         // résultat = true si tous les mots de questions sont dans mots, false sinon
         // remarque : utilise decoupeEnMots et existeChaineDicho}
-        return false;
+        boolean toutLesMotDedans = true;
+        ArrayList<String> motsDeQuestion = decoupeEnMots(question);
+        for (int i = 0 ; i<motsDeQuestion.size() ; i++){
+            if (!existeChaineDicho(mots, motsDeQuestion.get(i))){
+                toutLesMotDedans = false;
+            }
+        }
+
+        return toutLesMotDedans;
     }
 
 

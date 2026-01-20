@@ -1,4 +1,7 @@
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Thesaurus {
 
@@ -25,10 +28,31 @@ public class Thesaurus {
         // remarque 2 : pour la lecture du fichier, inspirez-vous de lireMotsOutils de Utilitaire
         // remarque 3 : pour les traitements de la chaîne lue, utilisez les méthodes indexOf,substring de String
         table = new ArrayList<>();
+
+        try {
+            FileInputStream file = new FileInputStream(nomFichier);
+            Scanner scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                String ligne = scanner.nextLine();
+                int indEntre = ligne.indexOf(":");
+                String entre = ligne.substring(0, indEntre);
+                String sortie = ligne.substring(indEntre+1);
+                ajouterEntreeSortie(entre, sortie);
+            }
+
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        trierEntreesSorties(table);
+
     }
 
     public void ajouterEntreeSortie(String entree, String sortie) {
         //{}=>{ajoute à la fin de la table une nouvelle EntreeSortie avec les attributs entree et sortie}
+        table.add(new EntreeSortie(entree, sortie));
     }
 
 
@@ -37,12 +61,47 @@ public class Thesaurus {
         // {résultat = la forme canonique associée à entree dans le thésaurus si l'entrée entree existe,
         // entree elle-même si elle n'existe pas. La recherche doit être dichotomique.
         // remarque : utilise compareTo de EntreeSortie }
-        int inf, sup, m;
-        return "";
-    }
+            int inf = 0;
+            int sup = table.size() - 1;
+            int m;
+            while (inf < sup) {
+                m = (inf + sup) / 2;
+                if (entree.compareTo(table.get(sup).entree) >= 0 ) {
+                    sup = m;
+                } else {
+                    inf = m + 1;
+                }
+            }
+            if (entree.compareTo(table.get(sup).entree) == 0) {
+                return table.get(sup).sortie; // valeur trouvée à l'index inf
+            } else {
+                return entree; // valeur non trouvée
+            }
+        }
 
     static void trierEntreesSorties(ArrayList<EntreeSortie> v) {
         //{} => {trie v sur la base de la méthode compareTo de EntreeSortie}
-    }
+        int i = 0;
+
+        while (i < v.size()-1) {
+            int indMin = i;
+            int j = i + 1;
+
+            while (j < v.size()) {
+                if (v.get(j).compareTo(v.get(indMin)) < 0) {
+                    indMin = j;
+                }
+                j = j + 1;
+            }
+
+            if (indMin != i) {
+                EntreeSortie temporaire = v.get(i);
+                v.set(i, v.get(indMin));
+                v.set(indMin, temporaire);
+            }
+
+            i = i + 1;
+        }
+}
 
 }
