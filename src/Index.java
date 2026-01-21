@@ -24,13 +24,38 @@ public class Index {
         public int rechercherSortie(Integer sortie) {
             //{}=>{recherche dichotomique de sortie dans sorties (triée dans l'ordre croissant)
             // résultat = l'indice de sortie dans sorties si trouvé, - l'indice d'insertion si non trouvé }
-            return 0;
+            if (sorties.isEmpty()){
+                return 0;
+            } else if (sorties.get(sorties.size() - 1) < sortie) {
+                return -sorties.size();
+            } else {
+                int inf = 0;
+                int sup = sorties.size() - 1;
+                int m;
+                while (inf < sup) {
+                    m = (inf + sup) / 2;
+                    if (sorties.get(m).compareTo(sortie)>=0) {
+                        sup = m;
+                    } else {
+                        inf = m + 1; // poursuivre la recherche à droite sur [m+1..sup-1]
+                    }
+                }
+                if (sorties.get(sup).compareTo(sortie)==0) {
+                    return sup;
+                } else {
+                    return -sup;
+                }
+            }
         }
 
 
         public void ajouterSortie(Integer sortie) {
             //{}=>{insère sortie à la bonne place dans sorties (triée dans l'ordre croissant)
             // remarque : utilise rechercherSortie de EntreeIndex }
+            int indice = rechercherSortie(sortie);
+            if(indice <= 0){
+                sorties.add(-indice, sortie);
+            }
         }
 
 
@@ -38,6 +63,7 @@ public class Index {
         public String toString() {
             return entree + "=>" + sorties;
         }
+
     }
 
     //Un vecteur d'EntreeIndex trié sur l'attribut entree (String) des EntreeIndex
@@ -52,7 +78,28 @@ public class Index {
     public int rechercherEntree(String entree) {
         //{}=>  {recherche dichotomique de entree dans table (triée dans l'ordre lexicographique des attributs entree des EntreeIndex) }
         //résultat =  l'indice de entree dans table si trouvé et -l'indice d'insertion sinon }
-        return 0;
+        if (table.isEmpty()){
+            return 0;
+        } else if (table.get(table.size() - 1).entree.compareTo(entree) < 0) {
+		    return -table.size();
+	    } else {
+		    int inf = 0;
+		    int sup = table.size() - 1;
+		    int m;
+		    while (inf < sup) {
+			    m = (inf + sup) / 2;
+			    if (table.get(m).entree.compareTo(entree) >= 0) {
+				    sup = m;
+			    } else {
+				    inf = m + 1;
+			    }
+		    }
+		    if (table.get(sup).entree.compareTo(entree) == 0) {
+			return sup;
+		    } else {
+			    return -sup;
+		    }
+	    }
     }
 
 
@@ -61,6 +108,18 @@ public class Index {
         // si l'entrée entree n'existe pas elle est créée.
         // ne fait rien si sortie était déjà présente dans ses sorties.
         // remarque : utilise la fonction rechercherEntree de Index et la procedure ajouterSortie de EntreeIndex}
+        if (table.size() == 0){
+            table.add(0, new EntreeIndex(entree));
+            table.get(0).ajouterSortie(sortie);
+        } else {
+            int indice = rechercherEntree(entree);
+            if (indice <= 0 && entree.compareTo(table.get(0).entree) != 0) {
+                table.add(-indice, new EntreeIndex(entree));
+                table.get(-indice).ajouterSortie(sortie);
+            } else {
+                table.get(indice).ajouterSortie(sortie);
+            }
+        }
     }
 
 
@@ -68,7 +127,12 @@ public class Index {
         // {}=>{résultat = les sorties associées à l'entrée entree
         // si l'entrée entree n'existe pas, une ArrayList vide est retournée.
         // remarque : utilise la fonction rechercherEntree de Index}
-        return new ArrayList<Integer>();
+        int indice = rechercherEntree(entree);
+        if(indice < 0){
+            return new ArrayList<Integer>();
+        } else{
+            return table.get(indice).sorties;
+        }
     }
 
     public void afficher() {
@@ -77,6 +141,4 @@ public class Index {
             System.out.println(this.table.get(i));
         }
     }
-
-
 }

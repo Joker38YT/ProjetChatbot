@@ -101,7 +101,9 @@ public class Utilitaire {
         chaine = chaine.replace('(', ' ');
         chaine = chaine.replace(')', ' ');
         chaine = chaine.replace('«', ' ');
+        chaine = chaine.replace('»', ' ');
         chaine = chaine.replace('-', ' ');
+        chaine = chaine.replace('’', ' ');
 
 
         String[] tabchaine = chaine.split(" ");
@@ -112,7 +114,7 @@ public class Utilitaire {
                 resultat.add(tabchaine[i]);
             }
         }
-
+        System.out.println(resultat);
         return resultat;
     }
 
@@ -120,14 +122,41 @@ public class Utilitaire {
     static private boolean existeChaine(ArrayList<String> mots, String mot) {
         //{}=>  {recherche séquentielle de mot dans mots
         // résultat =  true si trouvé et false sinon }
-        return false;
+        int i = 0;
+        boolean trouve = false;
+        while (i < mots.size() && !trouve) {
+            if (mots.get(i).compareTo(mot) == 0) {
+                trouve = true;
+            }
+            i++;
+        }
+        return trouve;
     }
 
 
     static private boolean existeChaineDicho(ArrayList<String> lesChaines, String chaine) {
         //{lesChaines (triée dans l'ordre lexicographique)}=>  {recherche dichotomique de chaine dans lesChaines
         // résultat =  true si trouvé et false sinon }
-        return false;
+        if (lesChaines.isEmpty() || lesChaines.get(lesChaines.size() - 1).compareTo(chaine) < 0) {
+            return false;
+        } else {
+            int inf = 0;
+            int sup = lesChaines.size() - 1;
+            int m;
+            while (inf < sup) {
+                m = (inf + sup) / 2;
+                if (lesChaines.get(m).compareTo(chaine) >= 0) {
+                    sup = m;
+                } else {
+                    inf = m + 1;
+                }
+            }
+            if (lesChaines.get(sup).compareTo(chaine) == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     static public boolean entierementInclus(ArrayList<String> mots, String question) {
@@ -148,7 +177,15 @@ public class Utilitaire {
 
     static private int rechercherChaine(ArrayList<String> lesChaines, String chaine) {
         // {}=>{résultat = l'indice de chaine dans lesChaines si trouvé et -1 sinon }
-        return 0;
+        int i = 0;
+        while (i < lesChaines.size() && !lesChaines.get(i).equals(chaine)) {
+            i++;
+        }
+
+        if (i >= lesChaines.size()) {
+            return -1;
+        }
+        return i;
     }
 
 
@@ -187,7 +224,23 @@ public class Utilitaire {
 
     static void trierChaines(ArrayList<String> v) {
         //{}=>{v est trié dans l'ordre lexicographique }
-
+        int i = 0;
+        while (i < v.size()-1) {
+            int indMin = i;
+            int j = i + 1;
+            while (j < v.size()) {
+                if (v.get(j).compareTo(v.get(indMin)) < 0) {
+                    indMin = j;
+                }
+                j = j + 1;
+            }
+            if (indMin != i) {
+                String temporaire = v.get(i);
+                v.set(i, v.get(indMin));
+                v.set(indMin, temporaire);
+            }
+            i = i + 1;
+        }
     }
 
 
@@ -197,18 +250,75 @@ public class Utilitaire {
         // Par exemple, si V est [3,4,5,5,5,6,6,8,8,8,12,16,16,20]
         // si seuil<=3 alors le résultat est [5,8].
         // si le seuil>3 alors le résultat est []}
-        return new ArrayList<Integer>();
+        ArrayList<Integer> vfin = new ArrayList<>();
+        if (v == null || v.isEmpty()) return vfin;
+
+        int compteur = 1;
+        int maxTrouve = 0;
+
+        for (int i = 1; i < v.size(); i++) {
+            if (v.get(i).compareTo(v.get(i-1)) == 0) {
+                compteur++;
+            } else {
+                System.out.println(v.get(i-1) + ": " + compteur);
+                if (compteur >= seuil) {
+                    if (compteur > maxTrouve) {
+                        maxTrouve = compteur;
+                        vfin.clear();
+                        vfin.add(v.get(i-1));
+                    } else if (compteur == maxTrouve) {
+                        vfin.add(v.get(i-1));
+                    }
+                }
+                compteur = 1;
+            }
+        }
+
+        if (compteur >= seuil) {
+            if (compteur > maxTrouve) {
+                vfin.clear();
+                vfin.add(v.get(v.size() - 1));
+            } else if (compteur == maxTrouve && maxTrouve > 0) {
+                vfin.add(v.get(v.size() - 1));
+            }
+        }
+        System.out.println(vfin);
+        return vfin;
     }
 
     static ArrayList<Integer> fusion(ArrayList<Integer> v1, ArrayList<Integer> v2) {
         //{v1 et v2 triés}=>{résultat = vecteur trié fusionnant v1 et v2 sans supprimer les répétitions
         // par exemple si v1 est [4,8,8,10,25] et v2 est [5,8,9,25]
         // le résultat est [4,5,8,8,8,9,10,25,25]}
-        return new ArrayList<Integer>();
+        ArrayList<Integer> resultat = new ArrayList<>();
+        int i = 0;
+        int j = 0;
+
+        while (i < v1.size() && j < v2.size()) {
+            if (v1.get(i) <= v2.get(j)) {
+                resultat.add(v1.get(i));
+                i++;
+            } else {
+                resultat.add(v2.get(j));
+                j++;
+            }
+        }
+
+        while (i < v1.size()) {
+            resultat.add(v1.get(i));
+            i++;
+        }
+
+        while (j < v2.size()) {
+            resultat.add(v2.get(j));
+            j++;
+        }
+
+        return resultat;
     }
 
 
-    static String calculForme(String chaine, ArrayList<String> motsOutils) {
+    static String calculForme(String chaine, ArrayList<String> motsOutils, Thesaurus thesaurus) {
         //{}=>{résultat = la concaténation des NBMOTS_FORME premiers mots-outils de chaine séparés par des blancs
         // remarque 1 : utilise decoupeMots et existeChaineDicho
         // remarque 2 : la limitation de la taille des formes permet d'accepter des réponses terminant par des précisions }
@@ -253,7 +363,7 @@ public class Utilitaire {
     static public Index constructionIndexFormes(ArrayList<String> questionsReponses, ArrayList<String> formes, ArrayList<String> motsOutils, Thesaurus thesaurus) {
         //{}=>{résultat = un index dont les entrées sont les "mots-outils positionnés" des questions (par exemple l'entrée pour un "Qui" en première position sera "qui_0")
         // et les sorties sont les indices (dans formes) des formes de réponses répondant aux questions contenant le mot-outil à cette position.
-        // remarque 1 : utilise calculForme, rechercherChaine, decoupeEnMots, rechercherEntree, existeChaineDicho et ajouterSortieAEntree
+        // remarque 1 : utilise calculForme, rechercherChaine, decoupeEnMots,  existeChaineDicho et ajouterSortieAEntree
         // remarque 2 : utilisez les méthodes indexOf et substring de String pour décomposer la question-réponse en question et réponse
         // remarque 3 : seuls les NBMOTS_FORME premiers mots-outils de la question sont pris en compte}
         Index index = new Index();
