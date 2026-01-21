@@ -23,30 +23,32 @@ public class Chatbot {
         // initialisation du vecteur des mots outils
         motsOutils = Utilitaire.lireMotsOutils("mots-outils.txt");
         // tri du vecteur des mots outils
-        //...
+       Utilitaire.trierChaines(motsOutils);
+
 
         // initialisation du vecteur des réponses
-        reponses = Utilitaire.lireReponses("reponses.txt");
-        //reponses = Utilitaire.lireReponses("mini_reponses.txt");
+//        reponses = Utilitaire.lireReponses("reponses.txt");
+        reponses = Utilitaire.lireReponses("mini_reponses.txt");
 
         // initialisation du thésaurus (partie 2)
-        //thesaurus = ...
+        thesaurus = new Thesaurus("thesaurus.txt");
 
         // construction de l'index pour retrouver rapidement les réponses sur leurs thématiques
-        //indexThemes = ...
-        //indexThemes.afficher();
+        indexThemes = Utilitaire.constructionIndexReponses(reponses, motsOutils, thesaurus);
+        indexThemes.afficher();
 
         // construction de la table des formes de réponses
-        //formesReponses = ...
-        //System.out.println(formesReponses);
+        formesReponses = Utilitaire.constructionTableFormes(reponses, motsOutils, thesaurus);
+        Utilitaire.trierChaines(formesReponses);
+        System.out.println(formesReponses);
 
         // initialisation du vecteur des questions/réponses idéales
-        ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("questions-reponses.txt");
-        //ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("mini_questions-reponses.txt");
+//        ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("questions-reponses.txt");
+        ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("mini_questions-reponses.txt");
 
         // construction de l'index pour retrouver rapidement les formes possibles de réponses à partir des mots outils de la question
-        //indexFormes = ...
-        //indexFormes.afficher();
+        indexFormes = Utilitaire.constructionIndexFormes(questionsReponses, formesReponses, motsOutils , thesaurus);
+        indexFormes.afficher();
 
         String reponse = "";
         String entreeUtilisateur = ""; // la dernière entrée de l'utilisateur
@@ -71,10 +73,17 @@ public class Chatbot {
 
 
     static private String repondre(String question) {
-        //ArrayList<Integer> reponsesCandidates;
-        //ArrayList<Integer> reponsesSelectionnees;
-        int choix = (int) (Math.random() * reponses.size());
-        return (reponses.get(choix));
+        ArrayList<Integer> reponsesCandidates = Utilitaire.constructionReponsesCandidates(question, indexThemes , motsOutils, thesaurus);
+        System.out.println(reponsesCandidates);
+        if (reponsesCandidates.size() == 0){
+            return MESSAGE_IGNORANCE;
+        }
+        ArrayList<Integer> reponsesSelectionnees = Utilitaire.selectionReponsesCandidates(question, reponsesCandidates,indexFormes,reponses,formesReponses,motsOutils, thesaurus);
+        if (reponsesSelectionnees.size() == 0){
+            return MESSAGE_IGNORANCE;
+        }
+        int choix = (int) (Math.random() * reponsesSelectionnees.size());
+        return reponses.get(reponsesSelectionnees.get(choix));
     }
 
     // partie 2
