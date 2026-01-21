@@ -31,14 +31,14 @@ public class Chatbot {
 //        reponses = Utilitaire.lireReponses("mini_reponses.txt");
 
         // initialisation du thésaurus (partie 2)
-        //thesaurus = ...
+        thesaurus = new Thesaurus("thesaurus.txt");
 
         // construction de l'index pour retrouver rapidement les réponses sur leurs thématiques
-        indexThemes = Utilitaire.constructionIndexReponses(reponses, motsOutils);
+        indexThemes = Utilitaire.constructionIndexReponses(reponses, motsOutils, thesaurus);
         indexThemes.afficher();
 
         // construction de la table des formes de réponses
-        formesReponses = Utilitaire.constructionTableFormes(reponses, motsOutils);
+        formesReponses = Utilitaire.constructionTableFormes(reponses, motsOutils, thesaurus);
         Utilitaire.trierChaines(formesReponses);
         System.out.println(formesReponses);
 
@@ -47,7 +47,7 @@ public class Chatbot {
 //        ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("mini_questions-reponses.txt");
 
         // construction de l'index pour retrouver rapidement les formes possibles de réponses à partir des mots outils de la question
-        indexFormes = Utilitaire.constructionIndexFormes(questionsReponses, formesReponses, motsOutils);
+        indexFormes = Utilitaire.constructionIndexFormes(questionsReponses, formesReponses, motsOutils , thesaurus);
         indexFormes.afficher();
 
         String reponse = "";
@@ -73,12 +73,12 @@ public class Chatbot {
 
 
     static private String repondre(String question) {
-        ArrayList<Integer> reponsesCandidates = Utilitaire.constructionReponsesCandidates(question, indexThemes , motsOutils);
+        ArrayList<Integer> reponsesCandidates = Utilitaire.constructionReponsesCandidates(question, indexThemes , motsOutils, thesaurus);
         System.out.println(reponsesCandidates);
         if (reponsesCandidates.size() == 0){
             return MESSAGE_IGNORANCE;
         }
-        ArrayList<Integer> reponsesSelectionnees = Utilitaire.selectionReponsesCandidates(question, reponsesCandidates,indexFormes,reponses,formesReponses,motsOutils);
+        ArrayList<Integer> reponsesSelectionnees = Utilitaire.selectionReponsesCandidates(question, reponsesCandidates,indexFormes,reponses,formesReponses,motsOutils, thesaurus);
         if (reponsesSelectionnees.size() == 0){
             return MESSAGE_IGNORANCE;
         }
