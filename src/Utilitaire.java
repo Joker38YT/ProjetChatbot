@@ -101,7 +101,9 @@ public class Utilitaire {
         chaine = chaine.replace('(', ' ');
         chaine = chaine.replace(')', ' ');
         chaine = chaine.replace('«', ' ');
+        chaine = chaine.replace('»', ' ');
         chaine = chaine.replace('-', ' ');
+        chaine = chaine.replace('’', ' ');
 
 
         String[] tabchaine = chaine.split(" ");
@@ -112,7 +114,7 @@ public class Utilitaire {
                 resultat.add(tabchaine[i]);
             }
         }
-
+        System.out.println(resultat);
         return resultat;
     }
 
@@ -122,7 +124,7 @@ public class Utilitaire {
         // résultat =  true si trouvé et false sinon }
         int i = 0;
         boolean trouve = false;
-        while (i < mots.size() & !trouve) {
+        while (i < mots.size() && !trouve) {
             if (mots.get(i).compareTo(mot) == 0) {
                 trouve = true;
             }
@@ -135,7 +137,7 @@ public class Utilitaire {
     static private boolean existeChaineDicho(ArrayList<String> lesChaines, String chaine) {
         //{lesChaines (triée dans l'ordre lexicographique)}=>  {recherche dichotomique de chaine dans lesChaines
         // résultat =  true si trouvé et false sinon }
-        if (lesChaines.get(lesChaines.size() - 1).compareTo(chaine) < 0) {
+        if (lesChaines.isEmpty() || lesChaines.get(lesChaines.size() - 1).compareTo(chaine) < 0) {
             return false;
         } else {
             int inf = 0;
@@ -168,17 +170,14 @@ public class Utilitaire {
     static private int rechercherChaine(ArrayList<String> lesChaines, String chaine) {
         // {}=>{résultat = l'indice de chaine dans lesChaines si trouvé et -1 sinon }
         int i = 0;
-        boolean trouve = false;
-        while (i < lesChaines.size() & !trouve) {
-            if (lesChaines.get(i).compareTo(chaine) == 0) {
-                trouve = true;
-            }
+        while (i < lesChaines.size() && !lesChaines.get(i).equals(chaine)) {
             i++;
         }
-        if(trouve){
-            return i-1;
+
+        if (i >= lesChaines.size()) {
+            return -1;
         }
-        return -1;
+        return i;
     }
 
 
@@ -241,54 +240,39 @@ public class Utilitaire {
         // Par exemple, si V est [3,4,5,5,5,6,6,8,8,8,12,16,16,20]
         // si seuil<=3 alors le résultat est [5,8].
         // si le seuil>3 alors le résultat est []}
-//        ArrayList<Integer> vfin = new ArrayList<>();
-//        if (v.isEmpty()) {
-//            return vfin; // Sécurité si la liste est vide
-//        }
-//
-//        int compteur = 1;
-//        int valeurPrec = v.get(0);
-//
-//        for (int i = 1; i < v.size(); i++) {
-//            if (v.get(i) == valeurPrec) {
-//                compteur++;
-//            } else {
-//                if (compteur >= seuil) {
-//                    vfin.add(valeurPrec);
-//                }
-//                valeurPrec = v.get(i);
-//                compteur = 1;
-//            }
-//        }
-//        if (compteur >= seuil) {
-//            vfin.add(valeurPrec);
-//        }
-//        return vfin;
         ArrayList<Integer> vfin = new ArrayList<>();
         if (v == null || v.isEmpty()) return vfin;
 
         int compteur = 1;
         int maxTrouve = 0;
 
-        for (int i = 1; i <= v.size(); i++) {
-            if (i < v.size() && v.get(i).equals(v.get(i-1))) {
+        for (int i = 1; i < v.size(); i++) {
+            if (v.get(i).compareTo(v.get(i-1)) == 0) {
                 compteur++;
-            }
-            else {
-                int valeurCandidate = v.get(i-1);
-
+            } else {
+                System.out.println(v.get(i-1) + ": " + compteur);
                 if (compteur >= seuil) {
                     if (compteur > maxTrouve) {
                         maxTrouve = compteur;
                         vfin.clear();
-                        vfin.add(valeurCandidate);
+                        vfin.add(v.get(i-1));
                     } else if (compteur == maxTrouve) {
-                        vfin.add(valeurCandidate);
+                        vfin.add(v.get(i-1));
                     }
                 }
                 compteur = 1;
             }
         }
+
+        if (compteur >= seuil) {
+            if (compteur > maxTrouve) {
+                vfin.clear();
+                vfin.add(v.get(v.size() - 1));
+            } else if (compteur == maxTrouve && maxTrouve > 0) {
+                vfin.add(v.get(v.size() - 1));
+            }
+        }
+        System.out.println(vfin);
         return vfin;
     }
 
@@ -333,7 +317,7 @@ public class Utilitaire {
         int i = 0;
         int nbMots = 0;
         while (i < listeMots.size() && nbMots < NBMOTS_FORME ) {
-            if (existeChaineDicho(motsOutils, listeMots.get(i))){
+            if (existeChaineDicho(motsOutils, listeMots.get(i).toLowerCase())){
                 motsOutils2 = motsOutils2 + " " + listeMots.get(i);
                 nbMots++;
             }
@@ -364,19 +348,24 @@ public class Utilitaire {
         // remarque 2 : utilisez les méthodes indexOf et substring de String pour décomposer la question-réponse en question et réponse
         // remarque 3 : seuls les NBMOTS_FORME premiers mots-outils de la question sont pris en compte}
         Index index = new Index();
-        for (int i = 0 ; i < questionsReponses.size() ; i++){
-            String questionReponse = questionsReponses.get(i);
-            String question = questionReponse.substring(0, questionReponse.indexOf("?"));
-            String reponse = calculForme(questionReponse.substring(questionReponse.indexOf("?")+2), motsOutils);
-            String questionMotsOutils = calculForme(question, motsOutils);
-            ArrayList<String> motDeQuestion = decoupeEnMots(questionMotsOutils);
 
-            System.out.println(reponse);
+        for (int i = 0; i < questionsReponses.size(); i++) {
+            String questionRep = questionsReponses.get(i);
 
+            String question = questionRep.substring(0, questionRep.indexOf("?"));
+            String formeReponse = calculForme(questionRep.substring(questionRep.indexOf("?") + 2), motsOutils);
 
-            for (int j = 0 ; j < motDeQuestion.size(); j++){
-                if (existeChaineDicho(motsOutils, motDeQuestion.get(j))){
-                    index.ajouterSortieAEntree(motDeQuestion.get(j) + "_" + j, rechercherChaine(formes, reponse));
+            String formeQuestion = calculForme(question, motsOutils);
+            ArrayList<String> motsQuestion = decoupeEnMots(formeQuestion);
+
+            int indiceForme = rechercherChaine(formes, formeReponse);
+
+            if (indiceForme != -1) {
+
+                for (int j = 0; j < motsQuestion.size(); j++) {
+                    if (existeChaineDicho(motsOutils, motsQuestion.get(j))) {
+                        index.ajouterSortieAEntree(motsQuestion.get(j) + "_" + j, indiceForme);
+                    }
                 }
             }
         }
@@ -392,20 +381,27 @@ public class Utilitaire {
         // des mots de la question dans la réponse }
         ArrayList<String> motDeQuestion = decoupeEnMots(question);
         ArrayList<String> motDeQuestionSansMotsOutil = new ArrayList<>();
-        for (int j = 0 ; j < motDeQuestion.size(); j++){
-            if (!existeChaineDicho(motsOutils, motDeQuestion.get(j))){
-                motDeQuestionSansMotsOutil.add(motDeQuestion.get(j));
+        for (int i = 0; i < motDeQuestion.size(); i++) {
+            String mot = motDeQuestion.get(i);
+            if (!existeChaineDicho(motsOutils, mot)) {
+                motDeQuestionSansMotsOutil.add(mot);
             }
         }
-
-        int seuil = motDeQuestionSansMotsOutil.size();
         ArrayList<Integer> vIndex = new ArrayList<>();
-
-        for (int i=0 ; i<motDeQuestionSansMotsOutil.size() ; i++){
-          vIndex= fusion(vIndex,IndexReponses.rechercherSorties(motDeQuestionSansMotsOutil.get(i)));
+        int nbMotsTrouves = 0;
+        for (String mot : motDeQuestionSansMotsOutil) {
+            ArrayList<Integer> sorties = IndexReponses.rechercherSorties(mot);
+            System.out.println("Mot: " + mot + " -> sorties: " + sorties);
+            if (!sorties.isEmpty()) {
+                vIndex = fusion(vIndex, sorties);
+                nbMotsTrouves++;
+            }
         }
-
-        return maxOccurences(vIndex, seuil);
+        System.out.println("vIndex final: " + vIndex + ", nbMotsTrouves: " + nbMotsTrouves);
+        if (nbMotsTrouves == 0) {
+            return new ArrayList<>();
+        }
+        return maxOccurences(vIndex, nbMotsTrouves);
     }
 
 
@@ -429,25 +425,26 @@ public class Utilitaire {
         // remarque 3 : pour trouver les formes de réponses qui répondent à la question, on utilise l'index des formes, et on sélectionne
         // en appelant maxOccurences (avec seuil = nombre des mots-outils de la question) celles associées dans l'index à tous les mots-outils de la question.
         // remarque 4 : seuls les NBMOTS_FORME premiers mots-outils de la question sont pris en compte}
-        int compteur = 0;
+        System.out.println("entrée");
+        int seuil = 0;
         ArrayList<Integer> reponsesInt = new ArrayList<>();
         ArrayList<String> vDeQuestion = decoupeEnMots(question);
         ArrayList<Integer> vFusion = new ArrayList<>();
-        for(int i=0; i<vDeQuestion.size(); i++){
-            if(existeChaine(motsOutils, vDeQuestion.get(i))){
-                String mot = vDeQuestion.get(i).toLowerCase() + "_" + i;
+        for(int i=0; i<vDeQuestion.size() && seuil < NBMOTS_FORME; i++){
+            if(existeChaineDicho(motsOutils, vDeQuestion.get(i))){
+                String mot = vDeQuestion.get(i).toLowerCase() + "_" + seuil;
                 vFusion = fusion(vFusion, IndexFormes.rechercherSorties(mot));
-                compteur++;
+                seuil++;
             }
         }
-        System.out.println(vFusion);
-        System.out.println(compteur);
-        vFusion = maxOccurences(vFusion, compteur-1);
-        System.out.println(vFusion);
+        System.out.println("vecteur avant la fusion : " + vFusion);
+        System.out.println("seuil : " + seuil);
+        vFusion = maxOccurences(vFusion, seuil);
+        System.out.println("vecteur après la fusion : " + vFusion);
         for(int i = 0; i< candidates.size(); i++){
             int y;
             for(y=0; y<vFusion.size() && calculForme(reponses.get(candidates.get(i)), motsOutils).compareTo(formesReponses.get(vFusion.get(y)))<0; y++);
-            if(y<vFusion.size() && calculForme(reponses.get(candidates.get(i)), motsOutils).compareTo(formesReponses.get(vFusion.get(y))) == 0){
+            if (y < vFusion.size()) {
                 reponsesInt.add(candidates.get(i));
             }
         }
