@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2aad8990-463e-4df8-93fb-9afe3397b404" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/projet_question-reponse.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet_reponse.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mini_questions-reponses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mini_questions-reponses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mini_reponses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mini_reponses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjetChatbot/Chatbot.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjetChatbot/Chatbot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjetChatbot/Index$EntreeIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjetChatbot/Index$EntreeIndex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjetChatbot/Index.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjetChatbot/Index.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjetChatbot/Tests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjetChatbot/Tests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjetChatbot/Thesaurus.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjetChatbot/Thesaurus.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ProjetChatbot/Utilitaire.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ProjetChatbot/Utilitaire.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/questions-reponses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/questions-reponses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reponses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/reponses.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Chatbot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chatbot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Thesaurus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Thesaurus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilitaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilitaire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/thesaurus.txt" beforeDir="false" afterPath="$PROJECT_DIR$/thesaurus.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Joker38YT&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Joker38YT/ProjetChatbot.git&quot;,
+    &quot;accountId&quot;: &quot;dbdc5873-4dc7-4d04-965d-2098dc31b342&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="38VzjDvz3exW7YtzNPIaAhvRSbE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Chatbot.executor": "Run",
+    "Application.Tests.executor": "Run",
+    "Application.test.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "Projet-Fini",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/quentin/Documents/GitHub/SAE.01.02",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.import",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Chatbot">
+    <configuration name="Chatbot" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Chatbot" />
+      <module name="ProjetChatbot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tests" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Tests" />
+      <module name="ProjetChatbot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test" />
+      <module name="ProjetChatbot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Tests" />
+        <item itemvalue="Application.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2aad8990-463e-4df8-93fb-9afe3397b404" name="Changes" comment="" />
+      <created>1768899659009</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1768899659009</updated>
+      <workItem from="1768899660430" duration="234000" />
+      <workItem from="1768899906466" duration="1809000" />
+      <workItem from="1768912534133" duration="11103000" />
+      <workItem from="1768978948332" duration="12848000" />
+      <workItem from="1768998888413" duration="14475000" />
+      <workItem from="1769016955533" duration="2513000" />
+      <workItem from="1769065646658" duration="11973000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SAE_01_02$Chatbot.ic" NAME="Chatbot Coverage Results" MODIFIED="1768918724854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>

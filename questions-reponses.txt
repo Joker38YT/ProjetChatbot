@@ -1234,5 +1234,12 @@ Où se situe la Lombardie ? La Lombardie est située en Italie.
 Dans quelle partie de l'Italie se situe la Lombardie ? La Lombardie est située dans la partie Nord de l'Italie (région frontalière avec la Suisse).
 Quelle est la monnaie au Canada ? La monnaie officielle du Canada est le dollar canadien.
 Quelle monnaie utilise-t-on au Canada ? La monnaie utilisée au Canada est la dollar canadien.
+<<<<<<< Updated upstream
 Qui est l'inventeur du téléphone ? Le téléphone a été inventé par Alexander Graham Bell.
 Quel est l'inventeur du vaccin ? Edward Jenner a inventé le premier vaccin.
+=======
+Qui est l'inventeur du téléphone ? Le téléphone a été inventé par Alexander Graham Bell.
+Quel est l'inventeur du vaccin ? Edward Jenner a inventé le premier vaccin.
+Qui est Will Smith ? Will Smith est un acteur.
+Quelle est la capitale de l'Italie ? la capitale de l'Italie est Rome.
+>>>>>>> Stashed changes
