@@ -1,0 +1,14 @@
+appellent:nomme
+nomment:nomme
+s:se
+la:le
+l:le
+les:le
+<<<<<<< Updated upstream
+monaie:monnaie
+peinte:peint
+=======
+joué:tourné
+auteur:écrit
+sont:est
+>>>>>>> Stashed changes
