@@ -6,7 +6,7 @@ public class Chatbot {
 
     private static final String MESSAGE_IGNORANCE = "Je ne sais pas.";
     private static final String MESSAGE_APPRENTISSAGE = "Je vais te l'apprendre.";
-    private static final String MESSAGE_BIENVENUE = "J'attends tes questions de culture générale.";
+    private static final String MESSAGE_BIENVENUE = "Bonjour Padawan. pose moi ta question.";
     private static final String MESSAGE_QUITTER = "Au revoir.";
     private static final String MESSAGE_INVITATION = "Je t'écoute.";
     private static final String MESSAGE_CONFIRMATION = "Très bien, c'est noté.";
@@ -88,7 +88,7 @@ public class Chatbot {
     private static String question_prec = ""; //variable pour garder la question pécédente
 
     static private String repondre(String question) {
-        int reponseEstMeta = estMetaQuestion(question,reponseMeta, questionsReponses) ;
+        int reponseEstMeta = estMetaQuestion(question,reponseMeta ) ;
         if (reponseEstMeta == -1){
 
             if (Utilitaire.entierementInclus(motsOutils, question)) { //si la question ne possède que des mots outils, on doit répondre dans le contexte de la question précédente
@@ -160,10 +160,17 @@ public class Chatbot {
         }
     }
 
-    static private int estMetaQuestion(String question, ArrayList<String> reponseMeta, ArrayList<String> questionsReponses) {
+    static private int estMetaQuestion(String question, ArrayList<String> reponseMeta) {
+
         final  String LIST_QUESTION = "Liste des questions ?";
 
         //Si la question est LIST_QUESTION alors on renvois Toute les questions de projet-question-reponse
+        /*Attention, si une nouvelle information est enregistré, elle n'apparaitra pas dans la liste des questions disponible
+        si on veut quelle apparaisse il faut décommanter la ligne si dessous, mais
+        cela forcera le chatbot a lire le fichier  projet_question-reponse.txt à chaque nouvelle question se qui n'est pas optimal pour le temps d'éxécution. */
+
+        //ArrayList<String> questionsReponses =  Utilitaire.lireQuestionsReponses("projet_question-reponse.txt");
+
         if (question.compareToIgnoreCase(LIST_QUESTION) == 0){
             int indexQuestionActu ;
             String questionActu ;

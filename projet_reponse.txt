@@ -33,3 +33,5 @@ Luke Skywalker a détruit la première Étoile de la Mort.
 Yoda est le plus puissant des Jedi
 Dark Sidious est le Sith le plus puissant de sa génération.
 Dark Vador a pour maître l'Empereur Palpatine.
+R2D2 est un droïde astro-mecano.
+C3PO est le meilleur ami de R2D2.

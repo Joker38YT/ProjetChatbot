@@ -33,3 +33,5 @@ Qui détruit la première Étoile de la Mort ? Luke Skywalker a détruit la prem
 Qui est le plus puissant des Jedi ? Yoda est le plus puissant des Jedi.
 Qui est le plus puissant des Sith ? Dark Sidious est le Sith le plus puissant de sa génération.
 Qui est le maître de Dark Vador ? Dark Vador a pour maître l'Empereur Palpatine.
+Qui est R2D2 ? R2D2 est un droïde astro-mecano.
+Qui est C3PO ? C3PO est le meilleur ami de R2D2.
