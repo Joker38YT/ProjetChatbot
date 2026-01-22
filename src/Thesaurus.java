@@ -38,19 +38,17 @@ public class Thesaurus {
                 int indEntre = ligne.indexOf(":");
                 String entre = ligne.substring(0, indEntre);
                 String sortie = ligne.substring(indEntre+1);
-                ajouterEntreeSortie(entre, sortie);
+                ajouterEntreeSortie(entre, sortie); // ajout dans la table
             }
 
             scanner.close();
+
         } catch (IOException e) {
+            // Gestion des erreurs si le fichier est introuvable ou illisible
             e.printStackTrace();
         }
 
-        trierEntreesSorties(table);
-
-        for (int i = 0 ; i<table.size() ; i++) {
-            System.out.println(table.get(i).entree + "  " + table.get(i).sortie);
-        }
+        trierEntreesSorties(table); // tri de la table par ordre alphabétique des entrées pour permettre la recherche dichotomique
 
     }
 
@@ -67,23 +65,27 @@ public class Thesaurus {
         // remarque : utilise compareTo de EntreeSortie }
         if (table.size()==0 || table.get(table.size()-1).entree.compareTo(entree)<0){
             return entree;
+
         } else {
             int inf = 0;
             int sup = table.size() - 1;
 
             while (inf < sup) {
+                // on continue de chercher tant que inf n'égal ou ne dépasse pas sup
                 int m = (inf + sup) / 2;
                 if (table.get(m).entree.compareTo(entree) >= 0) {
-                    sup = m;
+                    sup = m; // poursuivre la recherche à gauche sur [inf..m]
                 } else {
-                    inf = m + 1;
+                    inf = m + 1; // poursuivre la recherche à droite sur [m+1..sup-1]
                 }
             }
+
             if (table.get(sup).entree.compareTo(entree) == 0) {
-                return table.get(sup).sortie;
+                return table.get(sup).sortie; // si valeur de sup est égale à la valeur de sortie, on à trouvé notre valeur
             } else {
                 return entree;
             }
+
         }
     }
 

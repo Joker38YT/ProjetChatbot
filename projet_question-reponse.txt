@@ -1,7 +1,3 @@
-Qui a joué dans Star Wars ? Mark Hamil a joué dans Star Wars.
-Quand a été tourné Star Wars ? Star Wars a été tourner en 1977.
-Qui a créé Star Wars ? Star Wars a été créé par George Lucas.
-Quand a été créé Star Wars ?  Star Wars a été créé en 1977.
 Qui est Luke Skywalker ? Luke Skywalker est le dernier Jedi.
 Qui est la princesse Leia ? la princesse Leia est une des leaders de la résistance.
 Qui est Han Solo ? Han Solo est un contrebandier.
@@ -10,3 +6,30 @@ Qui est Dark Vador ? Dark Vador est l'homme avec le plus d'aura qui existe de l'
 Qui est Rey ? Rey n'est personne. Elle n'existe pas, je ne veux pas en entendre parler.
 Qui sont les Jedis les plus connus ? Les Jedis les plus connus sont Anakin Skywalker, Obi-Wan Kenobie, Yoda et Luke Skywalker.
 Quand à eu lieu la bataille de Yavin ? la bataille de Yavin a eu lieu en 0.
+Qui a créé Star Wars ? Star Wars a été créé par George Lucas.
+Quand a été créé Star Wars ? Star Wars a été créé en 1977.
+Qui a réalisé La Menace Fantôme ? La Menace Fantôme a été réalisé par George Lucas.
+Qui est Dark Maul ? Dark Maul est un Sith Zabrak aux cornes rouges.
+Qui est Padmé Amidala ? Padmé Amidala est la reine puis sénatrice de Naboo.
+Qui est la mère de Luke et Leia ? Luke et Leia ont pour mère Padmé Amidala.
+Quand naissent Luke et Leia ? Luke et Leia sont nés en 19 BBY.
+Qui est le Chancelier Palpatine ? Le Chancelier Palpatine est Dark Sidious.
+Qui est Dark Sidious ? Dark Sidious est le Seigneur Noir des Sith.
+Qui est le général Grievous ? Le général Grievous est un cyborg tueur de Jedi.
+Qui tue le général Grievous ? Obi-Wan Kenobi a vaincu le général Grievous sur Utapau.
+Qui est le comte Dooku ? Le comte Dooku est Dark Tyranus, un ancien Jedi devenu Sith.
+Qui a tranché la tête du comte Dooku ? Anakin Skywalker a tranché la tête du comte Dooku.
+Qui est Dark Vador ? Dark Vador est Anakin Skywalker après sa transformation.
+Qui brûle Anakin ? Anakin a été brûlé sur les rives de lave de Mustafar.
+Qui est Luke Skywalker ? Luke Skywalker est le fils d'Anakin et le dernier Jedi.
+Qui est la princesse Leia ? La princesse Leia est la fille d'Anakin et la leader de la Rébellion.
+Qui est Han Solo ? Han Solo est un contrebandier et le meilleur pilote de la galaxie.
+Qui est Chewbacca ? Chewbacca est le fidèle ami wookiee de Han Solo.
+Qui est Lando Calrissian ? Lando Calrissian est le baron-administrateur de la Cité des Nuages.
+Qui est Boba Fett ? Boba Fett est le chasseur de primes le plus redouté de la galaxie.
+Qui est l'Empereur Palpatine ? L'Empereur Palpatine est Dark Sidious.
+Quand a eu lieu la bataille de Yavin ? La bataille de Yavin a eu lieu en 0 BBY.
+Qui détruit la première Étoile de la Mort ? Luke Skywalker a détruit la première Étoile de la Mort.
+Qui est le plus puissant des Jedi ? Yoda est le plus puissant des Jedi.
+Qui est le plus puissant des Sith ? Dark Sidious est le Sith le plus puissant de sa génération.
+Qui est le maître de Dark Vador ? Dark Vador a pour maître l'Empereur Palpatine.

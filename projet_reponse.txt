@@ -1,7 +1,3 @@
-Mark Hamil a joué dans Star Wars.
-Star Wars a été tourner en 1977.
-Star Wars a été créé par George Lucas.
-Star Wars a été créé en 1977.
 Luke Skywalker est le dernier Jedi.
 la princesse Leia est une des leaders de la résistance.
 Han Solo est un contrebandier.
@@ -10,3 +6,30 @@ Dark Vador est l'homme avec le plus d'aura qui existe de l'univer (je veux rien 
 Rey n'est personne. Elle n'existe pas, je ne veux pas en entendre parler.
 Les Jedis les plus connus sont Anakin Skywalker, Obi-Wan Kenobie, Yoda et Luke Skywalker.
 la bataille de Yavin a eu lieu en 0.
+Star Wars a été créé par George Lucas.
+Star Wars a été créé en 1977.
+La Menace Fantôme a été réalisé par George Lucas.
+Dark Maul est un Sith Zabrak aux cornes rouges.
+Padmé Amidala est la reine puis sénatrice de Naboo.
+Luke et Leia ont pour mère Padmé Amidala.
+Luke et Leia sont nés en 19 BBY.
+Le Chancelier Palpatine est Dark Sidious.
+Dark Sidious est le Seigneur Noir des Sith.
+Le général Grievous est un cyborg tueur de Jedi.
+Obi-Wan Kenobi a vaincu le général Grievous sur Utapau.
+Le comte Dooku est Dark Tyranus, un ancien Jedi devenu Sith.
+Anakin Skywalker a tranché la tête du comte Dooku.
+Dark Vador est Anakin Skywalker après sa transformation.
+Anakin a été brûlé sur les rives de lave de Mustafar.
+Luke Skywalker est le fils d'Anakin et le dernier Jedi.
+La princesse Leia est la fille d'Anakin et la leader de la Rébellion.
+Han Solo est un contrebandier et le meilleur pilote de la galaxie.
+Chewbacca est le fidèle ami wookiee de Han Solo.
+Lando Calrissian est le baron-administrateur de la Cité des Nuages.
+Boba Fett est le chasseur de primes le plus redouté de la galaxie.
+L'Empereur Palpatine est Dark Sidious.
+La bataille de Yavin a eu lieu en 0 BBY.
+Luke Skywalker a détruit la première Étoile de la Mort.
+Yoda est le plus puissant des Jedi
+Dark Sidious est le Sith le plus puissant de sa génération.
+Dark Vador a pour maître l'Empereur Palpatine.

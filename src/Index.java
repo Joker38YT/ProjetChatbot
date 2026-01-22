@@ -25,22 +25,30 @@ public class Index {
             //{}=>{recherche dichotomique de sortie dans sorties (triée dans l'ordre croissant)
             // résultat = l'indice de sortie dans sorties si trouvé, - l'indice d'insertion si non trouvé }
             if (sorties.isEmpty()){
+                // si sorties est vide, on retourne 0
                 return 0;
+
             } else if (sorties.get(sorties.size() - 1) < sortie) {
+                // si sortie est plus grand que la derniere valeur de sorties, on retourne -sorties.size(
                 return -sorties.size();
+
             } else {
                 int inf = 0;
                 int sup = sorties.size() - 1;
                 int m;
+
                 while (inf < sup) {
+                    // on continue de chercher tant que inf n'égal ou ne dépasse pas sup
                     m = (inf + sup) / 2;
                     if (sorties.get(m).compareTo(sortie)>=0) {
-                        sup = m;
+                        sup = m; // poursuivre la recherche à gauche sur [inf..m]
                     } else {
                         inf = m + 1; // poursuivre la recherche à droite sur [m+1..sup-1]
                     }
                 }
+
                 if (sorties.get(sup).compareTo(sortie)==0) {
+                    // si valeur de sup est égal à la valeur de sortie, on à trouvé notre valeur
                     return sup;
                 } else {
                     return -sup;
@@ -54,8 +62,12 @@ public class Index {
             // remarque : utilise rechercherSortie de EntreeIndex }
             int indice = rechercherSortie(sortie);
             if (sorties.size()==0){
+                // si sorties est vide, on ajoute le premier élément
                 sorties.add(sortie);
+
             }else if(indice <= 0 && sortie.compareTo(sorties.get(0))!=0){
+                // si l'élément n'existe pas et qu'il est différent du tout premier élément pour éviter un doublon
+                // On insère l'élément à l'indice d'insertion
                 sorties.add(-indice, sortie);
             }
         }
@@ -81,27 +93,35 @@ public class Index {
         //{}=>  {recherche dichotomique de entree dans table (triée dans l'ordre lexicographique des attributs entree des EntreeIndex) }
         //résultat =  l'indice de entree dans table si trouvé et -l'indice d'insertion sinon }
         if (table.isEmpty()){
+            // si table est vide, on retourne 0
             return 0;
-        } else if (table.get(table.size() - 1).entree.compareTo(entree) < 0) {
+
+        } else if (table.get(table.size() - 1).entree.compareTo(entree) < 0) { // si entree est plus grand que la derniere valeur de table, on retourne -table.size()
 		    return -table.size();
+
 	    } else {
 		    int inf = 0;
 		    int sup = table.size() - 1;
 		    int m;
+
 		    while (inf < sup) {
+                // on continue de chercher tant que inf n'égal ou ne dépasse pas sup
 			    m = (inf + sup) / 2;
 			    if (table.get(m).entree.compareTo(entree) >= 0) {
-				    sup = m;
+				    sup = m; // poursuivre la recherche à gauche sur [inf..m]
 			    } else {
-				    inf = m + 1;
+				    inf = m + 1; // poursuivre la recherche à droite sur [m+1..sup-1]
 			    }
 		    }
+
 		    if (table.get(sup).entree.compareTo(entree) == 0) {
-			return sup;
+                // si valeur de sup est égale à la valeur de sortie, on à trouvé notre valeur
+			    return sup;
 		    } else {
 			    return -sup;
 		    }
 	    }
+
     }
 
 
@@ -111,14 +131,18 @@ public class Index {
         // ne fait rien si sortie était déjà présente dans ses sorties.
         // remarque : utilise la fonction rechercherEntree de Index et la procedure ajouterSortie de EntreeIndex}
         if (table.size() == 0){
+            // si sorties est vide, on ajoute le premier élément
             table.add(0, new EntreeIndex(entree));
             table.get(0).ajouterSortie(sortie);
         } else {
             int indice = rechercherEntree(entree);
             if (indice <= 0 && entree.compareTo(table.get(0).entree) != 0) {
+                // si l'élément n'existe pas et qu'il est différent du tout premier élément pour éviter un doublon
+                // on insère une nouvelle EntreeIndex à la bonne place
                 table.add(-indice, new EntreeIndex(entree));
                 table.get(-indice).ajouterSortie(sortie);
             } else {
+                // on récupère l'entrée existante et on lui ajoute la nouvelle sortie
                 table.get(indice).ajouterSortie(sortie);
             }
         }
@@ -133,6 +157,7 @@ public class Index {
         if(indice < 0){
             return new ArrayList<Integer>();
         } else{
+            // si l'entrée existe dans l'index, on accède à l'élément dans la table et on retourne sa liste de sorties
             return table.get(indice).sorties;
         }
     }
