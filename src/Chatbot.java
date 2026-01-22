@@ -18,17 +18,18 @@ public class Chatbot {
     private static ArrayList<String> formesReponses; //vecteur des formes de réponses
     private static Thesaurus thesaurus; //thésaurus
 
+
+
     public static void main(String[] args) {
 
         // initialisation du vecteur des mots outils
         motsOutils = Utilitaire.lireMotsOutils("mots-outils.txt");
         // tri du vecteur des mots outils
-       Utilitaire.trierChaines(motsOutils);
+        Utilitaire.trierChaines(motsOutils);
 
 
         // initialisation du vecteur des réponses
-        reponses = Utilitaire.lireReponses("reponses.txt");
-//        reponses = Utilitaire.lireReponses("mini_reponses.txt");
+        reponses = Utilitaire.lireReponses("projet_reponse.txt");
 
         // initialisation du thésaurus (partie 2)
         thesaurus = new Thesaurus("thesaurus.txt");
@@ -40,11 +41,9 @@ public class Chatbot {
         // construction de la table des formes de réponses
         formesReponses = Utilitaire.constructionTableFormes(reponses, motsOutils, thesaurus);
         Utilitaire.trierChaines(formesReponses);
-        System.out.println(formesReponses);
 
         // initialisation du vecteur des questions/réponses idéales
-        ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("questions-reponses.txt");
-//        ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("mini_questions-reponses.txt");
+        ArrayList<String> questionsReponses = Utilitaire.lireQuestionsReponses("projet_question-reponse.txt");
 
         // construction de l'index pour retrouver rapidement les formes possibles de réponses à partir des mots outils de la question
         indexFormes = Utilitaire.constructionIndexFormes(questionsReponses, formesReponses, motsOutils, thesaurus);
@@ -59,11 +58,22 @@ public class Chatbot {
         System.out.print("> ");
         System.out.println(MESSAGE_BIENVENUE);
 
+        String entreUtilisateurPrec = "";
         do { // on attend des questions
             System.out.print("> ");
             entreeUtilisateur = lecteur.nextLine();
             if (entreeUtilisateur.compareTo(MESSAGE_QUITTER) != 0) { //tant que l'utilisateur ne veut pas arrêter
-                reponse = repondre(entreeUtilisateur);
+                if (entreeUtilisateur.compareToIgnoreCase(MESSAGE_APPRENTISSAGE) == 0){
+                    if (entreeUtilisateur.isEmpty()) {
+                        System.out.println("> Que veux tu m'apprendre ?");
+                    } else {
+                       reponse= apprentissage(entreUtilisateurPrec, lecteur);
+                    }
+                } else {
+                    reponse = repondre(entreeUtilisateur);
+                    entreUtilisateurPrec = entreeUtilisateur;
+
+                }
                 System.out.println("> " + reponse);
             }
         } while (entreeUtilisateur.compareToIgnoreCase(MESSAGE_QUITTER) != 0);
@@ -71,24 +81,65 @@ public class Chatbot {
 
     }
 
+    private static String question_prec = "";
 
     static private String repondre(String question) {
-        ArrayList<Integer> reponsesCandidates = Utilitaire.constructionReponsesCandidates(question, indexThemes , motsOutils , thesaurus);
-        System.out.println(reponsesCandidates);
-        if (reponsesCandidates.size() == 0){
-            return MESSAGE_IGNORANCE;
+        if (Utilitaire.entierementInclus(motsOutils, question)) {
+            return repondreEnContexte(question, question_prec);
+        } else {
+            ArrayList<Integer> reponsesCandidates = Utilitaire.constructionReponsesCandidates(question, indexThemes, motsOutils, thesaurus);
+            System.out.println(reponsesCandidates);
+            if (reponsesCandidates.isEmpty()) {
+                return MESSAGE_IGNORANCE;
+            }
+            ArrayList<Integer> reponsesSelectionnees = Utilitaire.selectionReponsesCandidates(question, reponsesCandidates, indexFormes, reponses, formesReponses, motsOutils, thesaurus);
+            if (reponsesSelectionnees.isEmpty()) {
+                return MESSAGE_IGNORANCE;
+            }
+            int choix = (int) (Math.random() * reponsesSelectionnees.size());
+            question_prec = question;
+            return reponses.get(reponsesSelectionnees.get(choix));
         }
-        ArrayList<Integer> reponsesSelectionnees = Utilitaire.selectionReponsesCandidates(question, reponsesCandidates,indexFormes,reponses,formesReponses,motsOutils , thesaurus);
-        if (reponsesSelectionnees.size() == 0){
-            return MESSAGE_IGNORANCE;
-        }
-        int choix = (int) (Math.random() * reponsesSelectionnees.size());
-        return reponses.get(reponsesSelectionnees.get(choix));
     }
 
     // partie 2
     static private String repondreEnContexte(String question, String questionPrecedente) {
-        return "";
+        ArrayList<Integer> reponsesCandidates = Utilitaire.constructionReponsesCandidates(questionPrecedente, indexThemes, motsOutils, thesaurus);
+
+        if (reponsesCandidates.isEmpty()) {
+            return MESSAGE_IGNORANCE;
+        }
+
+        ArrayList<Integer> reponsesSelectionnees = Utilitaire.selectionReponsesCandidates(question, reponsesCandidates, indexFormes, reponses, formesReponses, motsOutils, thesaurus);
+
+        if (reponsesSelectionnees.isEmpty()) {
+            return MESSAGE_IGNORANCE;
+        }
+
+        int choix = (int) (Math.random() * reponsesSelectionnees.size());
+        return reponses.get(reponsesSelectionnees.get(choix));
+    }
+
+    static private String apprentissage(String question_prec, Scanner lecteur) {
+        System.out.println("> " + MESSAGE_INVITATION);
+        String reponse = lecteur.nextLine();
+
+        if (Utilitaire.reponseExiste(reponse, indexThemes, reponses, motsOutils, thesaurus)) {
+            if (Utilitaire.formeQuestionReponseExiste(question_prec, reponse, indexFormes, formesReponses, motsOutils, thesaurus)) {
+                return "Je connais déjà cette information.";
+            } else {
+                Utilitaire.integrerNouvelleQuestionReponse(question_prec, reponse, formesReponses, indexFormes, motsOutils, thesaurus);
+                Utilitaire.ecrireFichier("projet_reponse.txt", question_prec + " " + reponse);
+                return MESSAGE_CONFIRMATION;
+            }
+        } else {
+            Utilitaire.integrerNouvelleReponse(reponse, reponses, indexThemes, formesReponses, thesaurus);
+            Utilitaire.ecrireFichier("projet_reponse.txt", reponse);
+
+            Utilitaire.integrerNouvelleQuestionReponse(question_prec, reponse, formesReponses, indexFormes, motsOutils, thesaurus);
+            Utilitaire.ecrireFichier("projet_question-reponse.txt", question_prec + " " + reponse);
+            return MESSAGE_CONFIRMATION;
+        }
     }
 
 

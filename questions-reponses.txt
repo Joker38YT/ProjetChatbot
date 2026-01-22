@@ -1236,3 +1236,5 @@ Quelle est la monnaie au Canada ? La monnaie officielle du Canada est le dollar 
 Quelle monnaie utilise-t-on au Canada ? La monnaie utilisée au Canada est la dollar canadien.
 Qui est l'inventeur du téléphone ? Le téléphone a été inventé par Alexander Graham Bell.
 Quel est l'inventeur du vaccin ? Edward Jenner a inventé le premier vaccin.
+Qui est Will Smith ? Will Smith est un acteur.
+Quelle est la capitale de l'Italie ? la capitale de l'Italie est Rome.

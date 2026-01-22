@@ -115,7 +115,6 @@ public class Utilitaire {
                 resultat.add(tabchaine[i]);
             }
         }
-        System.out.println(resultat);
         return resultat;
     }
 
@@ -164,7 +163,16 @@ public class Utilitaire {
         //{mots est trié dans l'ordre lexicographique}=>
         // résultat = true si tous les mots de questions sont dans mots, false sinon
         // remarque : utilise decoupeEnMots et existeChaineDicho}
-        return false;
+        ArrayList<String> motsQuestion = decoupeEnMots(question);
+        boolean bon = true;
+        int i = 0;
+        while(i< motsQuestion.size() && bon){
+            if(!existeChaine(mots, motsQuestion.get(i))){
+                bon = false;
+            }
+            i++;
+        }
+        return bon;
     }
 
 
@@ -182,18 +190,49 @@ public class Utilitaire {
     }
 
 
-    static public void integrerNouvelleQuestionReponse(String question, String reponse, ArrayList<String> formes, Index indexFormes, ArrayList<String> motsOutils) {
+    static public void integrerNouvelleQuestionReponse(String question, String reponse, ArrayList<String> formes, Index indexFormes, ArrayList<String> motsOutils, Thesaurus thesaurus) {
         //{la forme de reponse n'existe pas ou n'est pas associée à question dans indexFormes}=>{la forme de reponse est ajoutée à la fin de formes si elle n'y est pas déjà
         // et indexFormes est mis à jour pour tenir compte de cette nouvelle question-réponse
         // remarque 1 : utilise calculForme, rechercherChaine, decoupeEnMots, existeChaineDicho, ajouterSortieAEntree, rechercherSortiePourEntree
         // remarque 2 : seuls les NBMOTS_FORME premiers mots-outils de la question sont pris en compte}
 
+        String repForme = calculForme(reponse, motsOutils , thesaurus);
+        if (rechercherChaine(formes, repForme )< 0 ){
+            formes.add(repForme);
+        }
+        int compteur =0;
+        ArrayList<String> motQuest = decoupeEnMots(calculForme(question, motsOutils, thesaurus));
+        for (int i = 0 ; i<motQuest.size() && compteur<= NBMOTS_FORME; i++){
+            motQuest.set(i, thesaurus.rechercherSortiePourEntree(motQuest.get(i)));
+            indexFormes.ajouterSortieAEntree(motQuest.get(i)+"_"+i, formes.size()-1);
+            compteur++;
+        }
+
+        System.out.print("index forme : ");
+        indexFormes.afficher();
+
     }
 
 
-    static public void IntegrerNouvelleReponse(String reponse, ArrayList<String> reponses, Index indexContenu, ArrayList<String> motsOutils) {
+    static public void integrerNouvelleReponse(String reponse, ArrayList<String> reponses, Index indexContenu, ArrayList<String> motsOutils , Thesaurus thesaurus) {
         //{reponse n'est pas présent dans reponses}=>{reponse est ajoutée à la fin de reponses et indexContenu est mis à jour pour tenir compte de cette nouvelle réponse
         // remarque : utilise decoupeEnMots, existeChaineDicho, ajouterSortieAEntree, rechercherSortiePourEntree
+
+        reponses.add(reponse);
+
+        ArrayList<String> motRep = decoupeEnMots(reponse);
+        for (int i = 0 ; i<motRep.size() ; i++){
+            motRep.set(i, thesaurus.rechercherSortiePourEntree(motRep.get(i)));
+            if (existeChaineDicho(motsOutils,motRep.get(i))){
+                motRep.remove(i);
+            }
+        }
+
+        for (int j = 0 ; j < motRep.size(); j++){
+            indexContenu.ajouterSortieAEntree(motRep.get(j), reponses.size()-1);
+        }
+
+
     }
 
     static public Index constructionIndexReponses(ArrayList<String> reponses, ArrayList<String> motsOutils, Thesaurus thesaurus) {
@@ -253,7 +292,6 @@ public class Utilitaire {
             if (v.get(i).compareTo(v.get(i-1)) == 0) {
                 compteur++;
             } else {
-                System.out.println(v.get(i-1) + ": " + compteur);
                 if (compteur >= seuil) {
                     if (compteur > maxTrouve) {
                         maxTrouve = compteur;
@@ -275,7 +313,6 @@ public class Utilitaire {
                 vfin.add(v.get(v.size() - 1));
             }
         }
-        System.out.println(vfin);
         return vfin;
     }
 
@@ -322,6 +359,9 @@ public class Utilitaire {
 
 
         while (i < listeMots.size() && nbMots < NBMOTS_FORME ) {
+            if(estUnNombre(listeMots.get(i))){
+                listeMots.set(i, "NUM");
+            }
             String motActu = listeMots.get(i);
             motActu = thesaurus.rechercherSortiePourEntree(motActu);
             if (existeChaineDicho(motsOutils, motActu.toLowerCase())){
@@ -370,15 +410,26 @@ public class Utilitaire {
             if (indiceForme != -1) {
 
                 for (int j = 0; j < motsQuestion.size(); j++) {
+
+                    if(estUnNombre(motsQuestion.get(j))){
+                        motsQuestion.set(j , "NUM");
+                    }
+
+                    String motActu = motsQuestion.get(j);
+                    motActu = thesaurus.rechercherSortiePourEntree(motActu);
+                    motsQuestion.set(j, motActu);
+                    System.out.println(motActu);
+
                     if (existeChaineDicho(motsOutils, motsQuestion.get(j))) {
                         index.ajouterSortieAEntree(motsQuestion.get(j) + "_" + j, indiceForme);
                     }
                 }
             }
         }
+        index.afficher();
         return index;
     }
-
+/*
     static public ArrayList<Integer> constructionReponsesCandidates(String question, Index IndexReponses, ArrayList<String> motsOutils, Thesaurus thesaurus) {
         //{}=>{résultat = vecteur des identifiants de réponses contenant l'ensemble des mots non outils de la question.
         // remarque 1 : utilise decoupeEnMots, existeChaineDicho, rechercherSorties, fusion et maxOccurences
@@ -404,23 +455,85 @@ public class Utilitaire {
         int nbMotsTrouves = 0;
         for (String mot : motDeQuestionSansMotsOutil) {
             ArrayList<Integer> sorties = IndexReponses.rechercherSorties(mot);
-            System.out.println("Mot: " + mot + " -> sorties: " + sorties);
             if (!sorties.isEmpty()) {
                 vIndex = fusion(vIndex, sorties);
                 nbMotsTrouves++;
             }
         }
-        System.out.println("vIndex final: " + vIndex + ", nbMotsTrouves: " + nbMotsTrouves);
         if (nbMotsTrouves == 0) {
             return new ArrayList<>();
         }
         return maxOccurences(vIndex, nbMotsTrouves);
     }
 
+*/
+
+
+    static public ArrayList<Integer> constructionReponsesCandidates(String question, Index IndexReponses, ArrayList<String> motsOutils, Thesaurus thesaurus) {
+        //{}=>{résultat = vecteur des identifiants de réponses contenant l'ensemble des mots non outils de la question.
+        // remarque 1 : utilise decoupeEnMots, existeChaineDicho, rechercherSorties, fusion et maxOccurences
+        // remarque 2 : maxOccurences est appelé en passant le nombre de mots non outils de la question comme valeur de seuil.
+        // remarque 3 : on aurait pu calculer directement une intersection au lieu d'une fusion et se passer de maxOccurences mais on
+        // souhaite pouvoir garder la possibilité d'assouplir par la suite la contrainte sur la présence de l'intégralité
+        // des mots de la question dans la réponse }
+        ArrayList<String> motDeQuestion = decoupeEnMots(question);
+        ArrayList<String> motDeQuestionSansMotsOutil = new ArrayList<>();
+        ArrayList<Integer> vIndex = new ArrayList<>();
+        int nbMotsTrouves = 0;
+
+        for (int i = 0; i < motDeQuestion.size(); i++) {
+            String mot = motDeQuestion.get(i);
+            mot = thesaurus.rechercherSortiePourEntree(mot);
+            if (!existeChaineDicho(motsOutils, mot)) {
+                motDeQuestionSansMotsOutil.add(mot);
+                ArrayList<Integer> sorties = IndexReponses.rechercherSorties(mot);
+                vIndex = fusion(vIndex, sorties);
+                nbMotsTrouves++;
+                System.out.println("Sortie " + sorties);
+            }
+        }
+
+        /*
+        for (int j = 0 ; j < motDeQuestionSansMotsOutil.size() ; j++ ) {
+            String motActu = motDeQuestionSansMotsOutil.get(j);
+            motActu = thesaurus.rechercherSortiePourEntree(motActu);
+            motDeQuestionSansMotsOutil.set(j, motActu);
+        }
+        */
+        System.out.println("Mot quest sans mot outils " + motDeQuestionSansMotsOutil);
+
+        /*
+        for (int k = 0 ; k <motDeQuestionSansMotsOutil.size() ; k++) {
+            ArrayList<Integer> sorties = IndexReponses.rechercherSorties(motDeQuestionSansMotsOutil.get(k));
+            System.out.println("Mot: " + motDeQuestionSansMotsOutil.get(k) + " -> sorties: " + sorties);
+            if (!sorties.isEmpty()) {
+                vIndex = fusion(vIndex, sorties);
+                nbMotsTrouves++;
+            }
+        }
+        */
+
+        System.out.println("vIndex final: " + vIndex + ", nbMotsTrouves: " + nbMotsTrouves);
+
+        vIndex = maxOccurences(vIndex, nbMotsTrouves);
+
+        if(nbMotsTrouves == 0) {
+            return new ArrayList<>();
+        }
+        return vIndex;
+    }
+
 
     static public boolean estUnNombre(String s) {
         //{s est non vide}=>{résultat = true si s ne contient que des caractères représentant des chiffres (>='0'&<='9') et false sinon}
-        return false;
+        boolean estUnNb = true;
+        for (int i =  0 ; i<s.length() ; i++){
+            if (s.charAt(i) < '0' | s.charAt(i) > '9'){
+                estUnNb = false;
+            }
+        }
+
+        return estUnNb;
     }
 
 
@@ -439,43 +552,82 @@ public class Utilitaire {
         // remarque 3 : pour trouver les formes de réponses qui répondent à la question, on utilise l'index des formes, et on sélectionne
         // en appelant maxOccurences (avec seuil = nombre des mots-outils de la question) celles associées dans l'index à tous les mots-outils de la question.
         // remarque 4 : seuls les NBMOTS_FORME premiers mots-outils de la question sont pris en compte}
-        System.out.println("entrée");
-        int seuil = 0;
         ArrayList<Integer> reponsesInt = new ArrayList<>();
-        ArrayList<String> vDeQuestion = decoupeEnMots(question);
+        ArrayList<String> vDeQuestion = decoupeEnMots(calculForme(question, motsOutils, thesaurus));
         ArrayList<Integer> vFusion = new ArrayList<>();
-        for(int i=0; i<vDeQuestion.size() && seuil < NBMOTS_FORME; i++){
-            if(existeChaineDicho(motsOutils, vDeQuestion.get(i))){
-                String mot = vDeQuestion.get(i).toLowerCase() + "_" + seuil;
-                vFusion = fusion(vFusion, IndexFormes.rechercherSorties(mot));
-                seuil++;
+        int seuil = 0;
+        for(int i=0; i<vDeQuestion.size(); i++){
+            String motActu = vDeQuestion.get(i);
+            if(estUnNombre(motActu)){
+                motActu = "NUM";
             }
+                String motTraite = thesaurus.rechercherSortiePourEntree(motActu);
+                String motCle = motTraite.toLowerCase() + "_" + i;
+            System.out.println("mot cle :"+ motCle);
+                vFusion = fusion(vFusion, IndexFormes.rechercherSorties(motCle));
         }
-        System.out.println("vecteur avant la fusion : " + vFusion);
-        System.out.println("seuil : " + seuil);
+        System.out.println(seuil);
+        System.out.println("avant maxoccurences " + vFusion);
         vFusion = maxOccurences(vFusion, seuil);
-        System.out.println("vecteur après la fusion : " + vFusion);
-        for(int i = 0; i< candidates.size(); i++){
-            int y;
-            for(y=0; y<vFusion.size() && calculForme(reponses.get(candidates.get(i)), motsOutils , thesaurus).compareTo(formesReponses.get(vFusion.get(y)))<0; y++);
-            if (y < vFusion.size()) {
+        System.out.println("après maxoccurence" + vFusion);
+        System.out.println(formesReponses.get(vFusion.get(0)));
+        for(int i = 0; i<candidates.size(); i++){
+            String formeCandidate = calculForme(reponses.get(candidates.get(i)), motsOutils, thesaurus);
+            boolean valide = false;
+            int j = 0;
+            while (j<vFusion.size() && !valide){
+                if(formeCandidate.compareTo(formesReponses.get(vFusion.get(j))) == 0){
+                    valide = true;
+                }
+                j++;
+            }
+            if(valide){
                 reponsesInt.add(candidates.get(i));
             }
+            System.out.println(formeCandidate);
         }
-        System.out.println(reponsesInt);
         return reponsesInt;
     }
 
     static public boolean reponseExiste(String reponse,
                                         Index indexReponses,
                                         ArrayList<String> reponses,
-                                        ArrayList<String> motsOutils) {
+                                        ArrayList<String> motsOutils,
+                                        Thesaurus thesaurus) {
         //{}=>{résultat = true si la reponse est présente dans reponses et false sinon.
         // remarque 1 : utilise decoupeEnMots, rechercherSortiePourEntree, existeChaineDicho, rechercherSorties, fusion, maxOccurences
         // remarque 2 : Le vecteur reponses n'est pas trié. Afin d'éviter le coûteux parcours séquentiel du
         // vecteur, on utilise indexReponses pour trouver les réponses contenant tous les mots non outils de la
         // reponse, puis on vérifie si l'une d'entre elle est identique à reponse.}
-        return false;
+
+        ArrayList<String> motDeRep = decoupeEnMots(reponse);
+        ArrayList<Integer> repPossible = new ArrayList<>();
+        for (int i = 0 ; i < motDeRep.size() ; i++) {
+
+            String motActu = motDeRep.get(i);
+            motActu = thesaurus.rechercherSortiePourEntree(motActu);
+            motDeRep.set(i, motActu);
+
+            if (existeChaineDicho(motsOutils, motDeRep.get(i))) {
+                motDeRep.remove(i);
+            }
+
+        }
+
+        for (int j = 0; j <motDeRep.size(); j++){
+            repPossible = fusion(repPossible, indexReponses.rechercherSorties(motDeRep.get(j)));
+        }
+
+        repPossible = maxOccurences(repPossible, motDeRep.size());
+        int k =0;
+        while (k < repPossible.size() && reponses.get(repPossible.get(k)).compareTo(reponse) ==0 ){
+            k++;
+        }
+        if (k != repPossible.size()){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -483,7 +635,8 @@ public class Utilitaire {
                                                      String reponse,
                                                      Index indexFormes,
                                                      ArrayList<String> formesReponses,
-                                                     ArrayList<String> motsOutils) {
+                                                     ArrayList<String> motsOutils,
+                                                     Thesaurus thesaurus) {
         //{}=>{résultat = * true si la forme de reponse est présente dans formesReponses
         // et qu'elle est accessible à partir des mots de la question en utilisant indexFormes.
         //                * false sinon.
@@ -493,6 +646,23 @@ public class Utilitaire {
         // on utilise indexFormes pour trouver les formes indexées par les mots-outils de la
         // question, puis on vérifie si l'une de ces formes est identique à la forme de reponse.
         // remarque 3 : seuls les NBMOTS_FORME premiers mots-outils de question sont pris en compte}
-        return false;
+
+        ArrayList<String> motDeRep = decoupeEnMots(reponse);
+        ArrayList<Integer> repPossible = new ArrayList<>();
+
+        ArrayList<String> formesQuestion = decoupeEnMots(calculForme(question, motsOutils, thesaurus));
+
+        ArrayList<Integer> vFusion = new ArrayList<>();
+        for (int i = 0; i < formesQuestion.size(); i++) {
+            vFusion = fusion(vFusion, indexFormes.rechercherSorties(formesQuestion.get(i)));
+        }
+
+        vFusion = maxOccurences(vFusion, formesQuestion.size());
+
+        ArrayList<String> formeRepPossible = new ArrayList<>();
+        for (int j = 0; j < vFusion.size(); j++) {
+            formeRepPossible.add(formesReponses.get(vFusion.get(j)));
+        }
+        return existeChaineDicho(formeRepPossible, calculForme(reponse, motsOutils, thesaurus));
     }
 }

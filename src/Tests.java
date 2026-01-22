@@ -4,11 +4,14 @@ import java.util.Arrays;
 
 public class Tests {
     public static void main(String[] args) {
-        ArrayList<Integer> v = new ArrayList<>(Arrays.asList(3,4,5,5,5,6,6,8,8,8,8,12,16,16,20,20,20));
-        ArrayList<Integer> y = new ArrayList<>(Arrays.asList(3,4,5,5,5,6,6,8,8,8,12,16,16,20,20,20));
-        ArrayList<Integer> v2 = Utilitaire.maxOccurences(v, 3);
-        ArrayList<Integer> y2 = Utilitaire.maxOccurences(y, 3);
-        System.out.println(v2);
-        System.out.println(y2);
+        String queNb = "1950";
+        String nbetLettre = "en1980";
+        String quelettre = "bonjour";
+
+        System.out.println("Que nb : " + Utilitaire.estUnNombre(queNb));
+        System.out.println("nb et lettre: " + Utilitaire.estUnNombre(nbetLettre));
+        System.out.println("Que lettre : " + Utilitaire.estUnNombre(quelettre));
+
+
     }
 }

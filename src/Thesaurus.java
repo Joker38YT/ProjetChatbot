@@ -47,8 +47,9 @@ public class Thesaurus {
         }
 
         trierEntreesSorties(table);
-        for (int i = 0 ; i <table.size() ; i++){
-            System.out.println(table.get(i).entree +  "  " +table.get(i).sortie);
+
+        for (int i = 0 ; i<table.size() ; i++) {
+            System.out.println(table.get(i).entree + "  " + table.get(i).sortie);
         }
 
     }
@@ -64,7 +65,7 @@ public class Thesaurus {
         // {résultat = la forme canonique associée à entree dans le thésaurus si l'entrée entree existe,
         // entree elle-même si elle n'existe pas. La recherche doit être dichotomique.
         // remarque : utilise compareTo de EntreeSortie }
-        if (table.get(table.size()-1).entree.compareTo(entree)<0){
+        if (table.size()==0 || table.get(table.size()-1).entree.compareTo(entree)<0){
             return entree;
         } else {
             int inf = 0;
@@ -72,7 +73,7 @@ public class Thesaurus {
 
             while (inf < sup) {
                 int m = (inf + sup) / 2;
-                if (table.get(m).entree.toLowerCase().compareTo(entree.toLowerCase()) >= 0) {
+                if (table.get(m).entree.compareTo(entree) >= 0) {
                     sup = m;
                 } else {
                     inf = m + 1;
@@ -114,3 +115,4 @@ public class Thesaurus {
 
 
 }
+

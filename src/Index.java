@@ -53,7 +53,9 @@ public class Index {
             //{}=>{insère sortie à la bonne place dans sorties (triée dans l'ordre croissant)
             // remarque : utilise rechercherSortie de EntreeIndex }
             int indice = rechercherSortie(sortie);
-            if(indice <= 0){
+            if (sorties.size()==0){
+                sorties.add(sortie);
+            }else if(indice <= 0 && sortie.compareTo(sorties.get(0))!=0){
                 sorties.add(-indice, sortie);
             }
         }

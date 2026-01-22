@@ -4,6 +4,6 @@ s:se
 la:le
 l:le
 les:le
-monaie:monnaie
-peinte:peint
-bordée:borde
+joué:tourné
+auteur:écrit
+sont:est
