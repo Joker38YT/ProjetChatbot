@@ -2,7 +2,7 @@ Qui est Luke Skywalker ? Luke Skywalker est le dernier Jedi.
 Qui est la princesse Leia ? la princesse Leia est une des leaders de la résistance.
 Qui est Han Solo ? Han Solo est un contrebandier.
 Qui est Chewbacca ? Chewbacca est le meilleur amis de Han Solo.
-Qui est Dark Vador ? Dark Vador est l'homme avec le plus d'aura qui existe de l'univer (je veux rien savoir)
+Qui est Dark Vador ? Dark Vador est l'homme avec le plus d'aura qui existe de l'univers (je veux rien savoir)
 Qui est Rey ? Rey n'est personne. Elle n'existe pas, je ne veux pas en entendre parler.
 Qui sont les Jedis les plus connus ? Les Jedis les plus connus sont Anakin Skywalker, Obi-Wan Kenobie, Yoda et Luke Skywalker.
 Quand à eu lieu la bataille de Yavin ? la bataille de Yavin a eu lieu en 0.
@@ -32,6 +32,5 @@ Quand a eu lieu la bataille de Yavin ? La bataille de Yavin a eu lieu en 0 BBY.
 Qui détruit la première Étoile de la Mort ? Luke Skywalker a détruit la première Étoile de la Mort.
 Qui est le plus puissant des Jedi ? Yoda est le plus puissant des Jedi.
 Qui est le plus puissant des Sith ? Dark Sidious est le Sith le plus puissant de sa génération.
-Qui est le maître de Dark Vador ? Dark Vador a pour maître l'Empereur Palpatine.
 Qui est R2D2 ? R2D2 est un droïde astro-mecano.
 Qui est C3PO ? C3PO est le meilleur ami de R2D2.

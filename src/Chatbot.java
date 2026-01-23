@@ -6,7 +6,7 @@ public class Chatbot {
 
     private static final String MESSAGE_IGNORANCE = "Je ne sais pas.";
     private static final String MESSAGE_APPRENTISSAGE = "Je vais te l'apprendre.";
-    private static final String MESSAGE_BIENVENUE = "Bonjour Padawan. pose moi ta question.";
+    private static final String MESSAGE_BIENVENUE = "Bonjour Padawan. Pose-moi ta question.";
     private static final String MESSAGE_QUITTER = "Au revoir.";
     private static final String MESSAGE_INVITATION = "Je t'écoute.";
     private static final String MESSAGE_CONFIRMATION = "Très bien, c'est noté.";

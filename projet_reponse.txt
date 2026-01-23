@@ -2,7 +2,7 @@ Luke Skywalker est le dernier Jedi.
 la princesse Leia est une des leaders de la résistance.
 Han Solo est un contrebandier.
 Chewbacca est le meilleur amis de Han Solo.
-Dark Vador est l'homme avec le plus d'aura qui existe de l'univer (je veux rien savoir)
+Dark Vador est l'homme avec le plus d'aura qui existe de l'univers (je veux rien savoir)
 Rey n'est personne. Elle n'existe pas, je ne veux pas en entendre parler.
 Les Jedis les plus connus sont Anakin Skywalker, Obi-Wan Kenobie, Yoda et Luke Skywalker.
 la bataille de Yavin a eu lieu en 0.
@@ -32,6 +32,5 @@ La bataille de Yavin a eu lieu en 0 BBY.
 Luke Skywalker a détruit la première Étoile de la Mort.
 Yoda est le plus puissant des Jedi
 Dark Sidious est le Sith le plus puissant de sa génération.
-Dark Vador a pour maître l'Empereur Palpatine.
 R2D2 est un droïde astro-mecano.
 C3PO est le meilleur ami de R2D2.

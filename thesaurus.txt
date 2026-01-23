@@ -75,4 +75,4 @@ des:le
 épousé:épouse
 naissent:nés
 proclamé:transforme
-devient-il:devenu
+fabriqué:créé
