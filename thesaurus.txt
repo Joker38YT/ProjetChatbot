@@ -5,6 +5,8 @@ tourné:créé
 tourna:créé
 créa:créé
 réalisa:réalisé
+éliminer:vaincu
+éliminé:vaincu
 tue:vaincu
 tué:vaincu
 tua:vaincu
