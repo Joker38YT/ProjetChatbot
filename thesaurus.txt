@@ -63,6 +63,7 @@ kenobie:kenobi
 tyranus:dooku
 padmé:amidala
 qui-gon:jinn
+boba:fett
 bobafet:fett
 bobafett:fett
 lando:calrissian
